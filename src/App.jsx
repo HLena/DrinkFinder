@@ -1,7 +1,8 @@
 import { Container } from "react-bootstrap"
-import Form from "./components/Form"
 import { CategoriesProvider } from './context/CategoriesProvider'
 import { DrinksProvider } from "./context/DrinksProvider"
+import Form from "./components/Form"
+import DrinksList from "./components/DrinksList"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         </header>
         <Container className="py-5">
           <Form/>
+          <DrinksList/>
         </Container>
       </DrinksProvider>
     </CategoriesProvider>
