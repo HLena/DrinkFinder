@@ -1,13 +1,30 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
-import { createContext, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 const DrinksContext = createContext();
 
 const DrinksProvider = ({children}) => {
 
     const [drinks, setDrinks] = useState([]);
+    const [drinkId, setDrinkId] = useState(null);
+    const [drinkSelected, setDrinkSelected] = useState({})
     const [modal, setModal] = useState(false);
+
+    useEffect(() => {
+        const getRecipe = async () => {
+            if(!drinkId) return;
+            try {
+                const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`
+                const {data} = await axios(url);
+                setDrinkSelected(data.drinks[0])
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        getRecipe()
+    }, [drinkId]);
 
     const getDrinks = async({name, category}) => {
         try {
@@ -23,13 +40,19 @@ const DrinksProvider = ({children}) => {
         setModal(!modal)
     }
 
+    const handleDrinkId = id => {
+        setDrinkId(id)
+    }
+
     return (
         <DrinksContext.Provider 
             value={{
                 getDrinks,
                 drinks,
                 handleCloseModal,
-                modal
+                modal,
+                handleDrinkId,
+                drinkSelected
             }}>
             {children}
         </DrinksContext.Provider>

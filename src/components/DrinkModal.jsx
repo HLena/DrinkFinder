@@ -1,17 +1,38 @@
-import { Modal } from "react-bootstrap"
+import { Modal, Image } from "react-bootstrap"
 import useDrinks from "../hooks/useDrinks"
 
 
 const DrinkModal = () => {
 
-    const {modal, handleCloseModal } = useDrinks();
+    const {modal, handleCloseModal, drinkSelected } = useDrinks();
+
+    const showIngredients = () => {
+        let ingredients = [];
+        for(let i = 0; i < 16 ; i++) {
+            if(drinkSelected[`strIngredient${i}`]) {
+                ingredients.push(
+                    <li key={`${drinkSelected[`strIngredient${i}`]}-${drinkSelected.strDrink}`}>{drinkSelected[`strIngredient${i}`]} {drinkSelected[`strMeasure${i}`]}</li>
+                )
+            }
+        }
+
+        return ingredients;
+    }
+
     return (
         <Modal show={modal} onHide={handleCloseModal}>
-            <Modal.Header closeButton>
-                <Modal.Title>titulo de la bebida</Modal.Title>
+            <Image 
+                src={drinkSelected.strDrinkThumb}
+                alt={drinkSelected.strDrink}
+                />
+            <Modal.Header>
+                <Modal.Title>{drinkSelected.strDrink}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Natus vero explicabo voluptates quos deserunt, assumenda ipsum iure impedit beatae accusantium incidunt cumque optio nisi, officiis consectetur similique ducimus repudiandae facere.
+                <h2>Instructions</h2>
+                {drinkSelected.strInstructions}
+                <h2>Ingredients and Mesures</h2>
+                { showIngredients() }
             </Modal.Body>
         </Modal>
     )

@@ -5,7 +5,7 @@ import useDrinks from '../hooks/useDrinks'
 
 const Drink = ({drink}) => {
 
-  const { handleCloseModal } = useDrinks()
+  const { handleCloseModal, handleDrinkId } = useDrinks()
   return (
     <Col md={6} lg={3}>
       <Card className='mb-4'>
@@ -19,7 +19,11 @@ const Drink = ({drink}) => {
           <Button 
             variant='warning'
             className="w-100 text-uppercase mt-2"
-            onClick={handleCloseModal}>See more</Button>
+            onClick={ () => {
+              handleCloseModal()
+              handleDrinkId(drink.idDrink)
+
+            }}>See more</Button>
         </Card.Body>
       </Card>
     </Col>
