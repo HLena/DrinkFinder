@@ -10,9 +10,11 @@ const DrinksProvider = ({children}) => {
     const [drinkId, setDrinkId] = useState(null);
     const [drinkSelected, setDrinkSelected] = useState({})
     const [modal, setModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const getRecipe = async () => {
+            setIsLoading(true)
             if(!drinkId) return;
             try {
                 const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`
@@ -20,6 +22,8 @@ const DrinksProvider = ({children}) => {
                 setDrinkSelected(data.drinks[0])
             } catch (error) {
                 console.log(error)
+            } finally {
+                setIsLoading(false)
             }
         }
 
@@ -52,7 +56,8 @@ const DrinksProvider = ({children}) => {
                 handleCloseModal,
                 modal,
                 handleDrinkId,
-                drinkSelected
+                drinkSelected,
+                isLoading
             }}>
             {children}
         </DrinksContext.Provider>

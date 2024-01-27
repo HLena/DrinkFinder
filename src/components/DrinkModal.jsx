@@ -4,7 +4,7 @@ import useDrinks from "../hooks/useDrinks"
 
 const DrinkModal = () => {
 
-    const {modal, handleCloseModal, drinkSelected } = useDrinks();
+    const {modal, handleCloseModal, drinkSelected, isLoading } = useDrinks();
 
     const showIngredients = () => {
         let ingredients = [];
@@ -20,21 +20,24 @@ const DrinkModal = () => {
     }
 
     return (
-        <Modal show={modal} onHide={handleCloseModal}>
-            <Image 
-                src={drinkSelected.strDrinkThumb}
-                alt={drinkSelected.strDrink}
-                />
-            <Modal.Header>
-                <Modal.Title>{drinkSelected.strDrink}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <h2>Instructions</h2>
-                {drinkSelected.strInstructions}
-                <h2>Ingredients and Mesures</h2>
-                { showIngredients() }
-            </Modal.Body>
-        </Modal>
+        !isLoading &&
+            (
+                <Modal show={modal} onHide={handleCloseModal}>
+                    <Image 
+                        src={drinkSelected.strDrinkThumb}
+                        alt={drinkSelected.strDrink}
+                        />
+                    <Modal.Header>
+                        <Modal.Title>{drinkSelected.strDrink}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <h2>Instructions</h2>
+                        {drinkSelected.strInstructions}
+                        <h2>Ingredients and Mesures</h2>
+                        { showIngredients() }
+                    </Modal.Body>
+                </Modal>
+            )
     )
 }
 
