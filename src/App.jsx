@@ -3,6 +3,7 @@ import { CategoriesProvider } from './context/CategoriesProvider'
 import { DrinksProvider } from "./context/DrinksProvider"
 import Form from "./components/Form"
 import DrinksList from "./components/DrinksList"
+import DrinkModal from "./components/DrinkModal"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Container className="py-5">
           <Form/>
           <DrinksList/>
+          <DrinkModal/>
         </Container>
       </DrinksProvider>
     </CategoriesProvider>
